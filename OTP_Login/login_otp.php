@@ -53,6 +53,7 @@
                     url: 'send_otp.php',
                     type: 'POST',
                     data: 'userEmail='+email,
+                    // data: {userEmail: email} They both are same
                     beforeSend: function(){
                         $('#send_otp_btn').val('Sending.....');
                     },
