@@ -52,8 +52,17 @@
                 $.ajax({
                     url: 'send_otp.php',
                     type: 'POST',
+                    data: 'userEmail='+email,
                     beforeSend: function(){
                         $('#send_otp_btn').val('Sending.....');
+                    },
+                    success: function(data){
+                        if(data.success){
+
+                        }
+                        else{
+
+                        }
                     }
                 });
             } 
