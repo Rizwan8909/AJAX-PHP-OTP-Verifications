@@ -35,6 +35,7 @@
                     </div>
 
                     <div class="form-group second-box">
+                        <small class="text-muted">*Check your email for your OTP code!</small>
                         <input type="text" class="form-control" id="OTP" name="OTP" placeholder="Please Enter your OTP" required>
                         <div id="otp_error"></div>
                     </div>
@@ -75,11 +76,12 @@
                     },
                     success: function(data) {
                         if (data == "email_exist") {
-
+                            $('.second-box').show();
+                            $('.first-box').hide();
                         }
 
                         if (data == "email_not_exist") {
-
+                            $('#email_error').html('<small class="text-danger">*Please enter a valid email!</small>')
                         }
                     }
                 });
