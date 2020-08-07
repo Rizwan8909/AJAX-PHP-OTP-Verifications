@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group second-box">
-                        <button type="button" id="send_otp_btn" class="btn btn-primary btn-block">Submit OTP</button>
+                        <button type="button" id="submit_otp_btn" class="btn btn-primary btn-block">Submit OTP</button>
                     </div>
 
                 </form>
@@ -61,6 +61,8 @@
 
 <script>
     $(document).ready(function() {
+
+        // Code for sending OTP
         $('#send_otp_btn').click(function() {
             var email = $('#email').val();
 
@@ -78,6 +80,7 @@
                         if (data == "email_exist") {
                             $('.second-box').show();
                             $('.first-box').hide();
+                            $('#send_otp_btn').val('Send OTP');
                         }
 
                         if (data == "email_not_exist") {
@@ -88,6 +91,43 @@
             } else {
 
                 $('#email_error').html('<small class="text-danger">*Please fill the email field!</small>');
+
+                // After 3 seconds it will remove the error
+                setTimeout(() => {
+                    $('#email_error').html('');
+                }, 3000);
+            }
+        });
+
+
+        // Code for Submiting OTP
+        $('#submit_otp_btn').click(function() {
+            var otp = $('#OTP').val();
+
+            if ($.trim(otp).length > 0) {
+
+                $.ajax({
+                    url: 'check_otp.php',
+                    type: 'POST',
+                    data: 'userOTP=' + otp,
+                    // data: {userEmail: email} They both are same
+                    beforeSend: function() {
+                        $('#submit_otp_btn').val('Submitting.....');
+                    },
+                    success: function(data) {
+                        if (data == "correct_otp") {
+                            window.location = "dashboard.php";
+                        }
+
+                        if (data == "incorrect_otp") {
+                            $('#otp_error').html('<small class="text-danger">*Please enter a valid OTP!</small>');
+                            $('#submit_otp_btn').val('Submit OTP');
+                        }
+                    }
+                });
+            } else {
+
+                $('#otp_error').html('<small class="text-danger">*Please Fill the otp field!</small>');
 
                 // After 3 seconds it will remove the error
                 setTimeout(() => {
