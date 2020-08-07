@@ -22,14 +22,30 @@
                 <h5>Login With OTP</h5>
             </div>
             <div class="card-body mt-4 my-4">
+
+
                 <form method="POST">
-                    <div class="form-group">
+                    <div class="form-group first-box">
                         <input type="text" class="form-control" id="email" name="email" placeholder="Please Enter your email" required>
                         <div id="email_error"></div>
                     </div>
 
-                    <button type="button" id="send_otp_btn" class="btn btn-primary btn-block">Send OTP</button>
+                    <div class="form-group first-box">
+                        <button type="button" id="send_otp_btn" class="btn btn-primary btn-block">Send OTP</button>
+                    </div>
+
+                    <div class="form-group second-box">
+                        <input type="text" class="form-control" id="OTP" name="OTP" placeholder="Please Enter your OTP" required>
+                        <div id="otp_error"></div>
+                    </div>
+
+                    <div class="form-group second-box">
+                        <button type="button" id="send_otp_btn" class="btn btn-primary btn-block">Submit OTP</button>
+                    </div>
+
                 </form>
+
+
             </div>
         </div>
     </div>
@@ -52,23 +68,22 @@
                 $.ajax({
                     url: 'send_otp.php',
                     type: 'POST',
-                    data: 'userEmail='+email,
+                    data: 'userEmail=' + email,
                     // data: {userEmail: email} They both are same
-                    beforeSend: function(){
+                    beforeSend: function() {
                         $('#send_otp_btn').val('Sending.....');
                     },
-                    success: function(data){
-                        if(data.success){
+                    success: function(data) {
+                        if (data == "email_exist") {
 
                         }
-                        else{
+
+                        if (data == "email_not_exist") {
 
                         }
                     }
                 });
-            } 
-            
-            else {
+            } else {
 
                 $('#email_error').html('<small class="text-danger">*Please fill the email field!</small>');
 
@@ -77,6 +92,12 @@
                     $('#email_error').html('');
                 }, 3000);
             }
-        })
-    })
+        });
+    });
 </script>
+
+<style>
+    .second-box{
+        display: none;
+    }
+</style>
